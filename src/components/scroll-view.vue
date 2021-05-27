@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import IScroll from 'iscroll/build/iscroll-probe'
+import BetterScroll from 'better-scroll'
 
 export default {
   name: 'ScrollView',
   mounted() {
     const wrapperEl = this.$refs.wrapper
-    this.iScroll = new IScroll(wrapperEl, {
+    this.scroll = new BetterScroll(wrapperEl, {
       mouseWheel: true,
       scrollbars: false,
       probeType: 3,
@@ -20,13 +20,16 @@ export default {
       scrollY: true,
       disablePointer: true,
       disableTouch: false,
-      disableMouse: true
+      disableMouse: true,
+      // 解决安卓触摸无效的问题
+      click: true,
+      tap: true
     })
 
     // 创建一个观察者对象
     const observer = new MutationObserver((mutationList, observer) => {
       // console.log('Mutation observer: ', this.iScroll.maxScrollY, mutationList, observer)
-      this.iScroll.refresh()
+      this.scroll.refresh()
     })
     const config = {
       childList: true,
@@ -38,7 +41,7 @@ export default {
   },
   methods: {
     scrolling(fn) {
-      this.iScroll.on('scroll', function () {
+      this.scroll.on('scroll', function () {
         fn(this.y)
       })
     }
