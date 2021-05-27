@@ -1,13 +1,19 @@
 <template>
   <div id="app">
-    <div class="test">我爱上的个哈哈个</div>
+    <Header></Header>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
-<style lang="scss">
-.test {
-  background: yellow;
-  transform: translate(100px, 100px);
-  font-size: 66Px;
+<script>
+import Header from './components/header'
+import Tabbar from './components/tabbar'
+
+export default {
+  name: 'App',
+  components: { Header, Tabbar }
 }
+</script>
+
+<style scoped lang="scss">
 </style>
