@@ -10,13 +10,13 @@ export default {
         .get(url, {
           params
         })
-        .then((res) => resolve(res))
+        .then((res) => resolve(res.data))
         .catch((err) => reject(err))
     }),
   post: (url = '', data = {}) => new Promise((resolve, reject) => {
     axios
       .post(url, data)
-      .then((res) => resolve(res))
+      .then((res) => resolve(res.data))
       .catch((err) => reject(err))
   })
 }
