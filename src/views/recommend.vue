@@ -3,8 +3,13 @@
 </template>
 
 <script>
-export default {
+import { getBanner } from '../api'
 
+export default {
+  name: 'Recommend',
+  created() {
+    getBanner().then(data => { console.log(data) }).catch(err => console.error(err))
+  }
 }
 </script>
 
