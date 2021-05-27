@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <Tabbar></Tabbar>
+    <my-header></my-header>
+    <my-tabbar></my-tabbar>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -11,7 +12,7 @@ import Tabbar from './components/tabbar'
 
 export default {
   name: 'App',
-  components: { Header, Tabbar }
+  components: { MyHeader: Header, MyTabbar: Tabbar }
 }
 </script>
 
