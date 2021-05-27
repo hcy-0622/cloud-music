@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getBanner } from '@/api'
+import { getBanner } from '../../api'
 import Banner from './banner'
 
 export default {
