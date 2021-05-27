@@ -3,8 +3,13 @@
     <scroll-view>
       <div>
         <banner :banners="banners"></banner>
-        <personalized title="推荐歌单" :personalized="personalized" @select="selectItem"></personalized>
-        <personalized title="最新专辑" :personalized="albums"></personalized>
+        <personalized
+          type="personalized"
+          title="推荐歌单"
+          :personalized="personalized"
+          @select="selectItem"
+        ></personalized>
+        <personalized type="album" title="最新专辑" :personalized="albums" @select="selectItem"></personalized>
         <song-list :songs="songs"></song-list>
       </div>
     </scroll-view>
@@ -47,8 +52,8 @@ export default {
     }).catch(err => console.error(err))
   },
   methods: {
-    selectItem(id) {
-      this.$router.push({ path: `/recommend/detail/${id}` })
+    selectItem(id, type) {
+      this.$router.push(`/recommend/detail/${id}/${type}`)
     }
   }
 }

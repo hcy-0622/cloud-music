@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getPlayList } from '@/api'
+import { getAlbum, getPlayList } from '@/api'
 import ScrollView from '@/components/scroll-view.vue'
 import SubHeader from './sub-header.vue'
 import DetailTop from './detail-top.vue'
@@ -22,13 +22,25 @@ export default {
   components: { SubHeader, DetailTop, DetailBottom, ScrollView },
   data() {
     return {
-      playList: []
+      playList: {}
     }
   },
   created() {
-    getPlayList({ id: this.$route.params.id }).then(data => {
-      this.playList = data.playlist
-    }).catch(err => console.error(err))
+    const { id, type } = this.$route.params
+    if (type === 'personalized') {
+      getPlayList({ id }).then(data => {
+        this.playList = data.playlist
+      }).catch(err => console.error(err))
+    } else if (type === 'album') {
+      getAlbum({ id }).then(data => {
+        const { album, songs } = data
+        this.playList = {
+          name: album.name,
+          coverImgUrl: album.picUrl,
+          tracks: songs
+        }
+      }).catch(err => console.error(err))
+    }
   },
   mounted() {
     const topEl = this.$refs.top.$el

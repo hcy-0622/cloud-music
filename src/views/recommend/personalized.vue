@@ -21,6 +21,11 @@
 export default {
   name: 'Personalized',
   props: {
+    type: {
+      type: String,
+      required: true,
+      default: ''
+    },
     title: {
       type: String,
       required: true,
@@ -34,7 +39,7 @@ export default {
   },
   methods: {
     selectItem(id) {
-      this.$emit('select', id)
+      this.$emit('select', id, this.type)
     }
   }
 }
