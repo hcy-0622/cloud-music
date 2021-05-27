@@ -1,21 +1,26 @@
 <template>
-  <div>
-    <banner :banners="banners"></banner>
-    <personalized title="推荐歌单" :personalized="personalized"></personalized>
-    <personalized title="最新专辑" :personalized="albums"></personalized>
-    <song-list :songs="songs"></song-list>
+  <div class="recommend">
+    <scroll-view>
+      <div>
+        <banner :banners="banners"></banner>
+        <personalized title="推荐歌单" :personalized="personalized"></personalized>
+        <personalized title="最新专辑" :personalized="albums"></personalized>
+        <song-list :songs="songs"></song-list>
+      </div>
+    </scroll-view>
   </div>
 </template>
 
 <script>
 import { getBanner, getPersonalized, getNewAlbum, getNewSong } from '../../api'
+import ScrollView from '../../components/scroll-view'
 import Banner from './banner'
 import Personalized from './personalized'
 import SongList from './song-list'
 
 export default {
   name: 'Recommend',
-  components: { Banner, Personalized, SongList },
+  components: { ScrollView, Banner, Personalized, SongList },
   data() {
     return {
       banners: [],
@@ -41,5 +46,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.recommend {
+  position: fixed;
+  top: 184px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 </style>
