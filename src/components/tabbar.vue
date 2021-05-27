@@ -22,8 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/styles/variables.scss';
-@import '../assets/styles/mixins.scss';
+@import '../assets/styles/variables';
+@import '../assets/styles/mixins';
 
 .tabbar {
   width: 100%;
@@ -32,7 +32,6 @@ export default {
   display: flex;
   justify-content: space-around;
   position: relative;
-  z-index: 999;
   .item {
     span {
       line-height: 84px;

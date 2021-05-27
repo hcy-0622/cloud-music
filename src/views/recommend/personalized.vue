@@ -4,7 +4,12 @@
       <h3>{{ title }}</h3>
     </div>
     <div class="personalized-list">
-      <div class="personalized-item" v-for="p of personalized" :key="p.id">
+      <div
+        class="personalized-item"
+        v-for="p of personalized"
+        :key="p.id"
+        @click="selectItem(p.id)"
+      >
         <img v-lazy="p.picUrl" alt />
         <p>{{ p.name }}</p>
       </div>
@@ -26,13 +31,18 @@ export default {
       required: true,
       default: () => []
     }
+  },
+  methods: {
+    selectItem(id) {
+      this.$emit('select', id)
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables.scss';
-@import '../../assets/styles/mixins.scss';
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
 
 .personalized {
   @include bg_sub_color();

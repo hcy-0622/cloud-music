@@ -3,17 +3,22 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const Recommend = () => import('../views/recommend')
-const Singer = () => import('../views/singer')
-const Rank = () => import('../views/rank')
-const Search = () => import('../views/search')
+const Recommend = () => import('../views/recommend/index.vue')
+const Singer = () => import('../views/singer/index.vue')
+const Rank = () => import('../views/rank/index.vue')
+const Search = () => import('../views/search/index.vue')
+const Detail = () => import('../views/detail/index.vue')
 
 const routes = [{
   path: '/',
   redirect: '/recommend'
 }, {
   path: '/recommend',
-  component: Recommend
+  component: Recommend,
+  children: [{
+    path: 'detail/:id',
+    component: Detail
+  }]
 }, {
   path: '/singer',
   component: Singer

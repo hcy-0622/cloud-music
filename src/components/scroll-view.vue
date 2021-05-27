@@ -13,7 +13,8 @@ export default {
     const wrapperEl = this.$refs.wrapper
     this.iScroll = new IScroll(wrapperEl, {
       mouseWheel: true,
-      scrollbars: true,
+      scrollbars: false,
+      probeType: 3,
       // 解决拖拽卡顿问题
       scrollX: false,
       scrollY: true,
@@ -24,7 +25,7 @@ export default {
 
     // 创建一个观察者对象
     const observer = new MutationObserver((mutationList, observer) => {
-      console.log(this.iScroll.maxScrollY)
+      console.log('Mutation observer: ', this.iScroll.maxScrollY, mutationList, observer)
       this.iScroll.refresh()
     })
     const config = {
@@ -34,6 +35,13 @@ export default {
     }
     // 观察者对象和需要观察的内容
     observer.observe(wrapperEl, config)
+  },
+  methods: {
+    scrolling(fn) {
+      this.iScroll.on('scroll', function () {
+        fn(this.y)
+      })
+    }
   }
 }
 </script>
