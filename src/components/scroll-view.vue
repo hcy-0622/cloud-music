@@ -25,7 +25,7 @@ export default {
 
     // 创建一个观察者对象
     const observer = new MutationObserver((mutationList, observer) => {
-      console.log('Mutation observer: ', this.iScroll.maxScrollY, mutationList, observer)
+      // console.log('Mutation observer: ', this.iScroll.maxScrollY, mutationList, observer)
       this.iScroll.refresh()
     })
     const config = {

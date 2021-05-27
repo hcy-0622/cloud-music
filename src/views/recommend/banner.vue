@@ -1,5 +1,5 @@
 <template>
-  <swiper class="banner" :options="swiperOptions" v-if="banners.length > 0">
+  <swiper v-if="banners.length > 0" class="banner" :options="swiperOptions">
     <swiper-slide class="banner-item" v-for="b of banners" :key="b.bannerId">
       <a :href="b.url">
         <img :src="b.pic" alt />
@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import 'swiper/dist/css/swiper.css'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 
 export default {
   name: 'Banner',
   components: {
-    swiper,
-    swiperSlide
+    Swiper,
+    SwiperSlide
   },
   props: {
     banners: {
@@ -44,9 +44,6 @@ export default {
         observeSlideChildren: true
       }
     }
-  },
-  methods: {
-
   }
 }
 </script>
