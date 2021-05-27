@@ -46,8 +46,10 @@ export default {
     const topEl = this.$refs.top.$el
     this.$refs.scrollView.scrolling((offsetY) => {
       if (offsetY < 0) {
-        const scale = 20 * Math.abs(offsetY) / topEl.offsetHeight
-        topEl.style.filter = `blur(${scale}px)`
+        const scale = Math.abs(offsetY) / topEl.offsetHeight
+        this.$refs.top.changeMask(scale)
+        // 高斯模糊非常消耗性能, 不建议使用
+        // topEl.style.filter = `blur(${scale}px)`
       } else {
         const scale = 1 + offsetY / topEl.offsetHeight
         topEl.style.transform = `scale(${scale})`

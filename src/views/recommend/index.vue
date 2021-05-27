@@ -1,18 +1,20 @@
 <template>
   <div class="recommend">
-    <scroll-view>
-      <div>
-        <banner :banners="banners"></banner>
-        <personalized
-          type="personalized"
-          title="推荐歌单"
-          :personalized="personalized"
-          @select="selectItem"
-        ></personalized>
-        <personalized type="album" title="最新专辑" :personalized="albums" @select="selectItem"></personalized>
-        <song-list :songs="songs"></song-list>
-      </div>
-    </scroll-view>
+    <div class="recommend-wrapper">
+      <scroll-view>
+        <div>
+          <banner :banners="banners"></banner>
+          <personalized
+            type="personalized"
+            title="推荐歌单"
+            :personalized="personalized"
+            @select="selectItem"
+          ></personalized>
+          <personalized type="album" title="最新专辑" :personalized="albums" @select="selectItem"></personalized>
+          <song-list :songs="songs"></song-list>
+        </div>
+      </scroll-view>
+    </div>
     <transition>
       <router-view></router-view>
     </transition>
@@ -67,6 +69,11 @@ export default {
   bottom: 0;
   left: 0;
   overflow: hidden;
+  .recommend-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 }
 
 .v-enter {

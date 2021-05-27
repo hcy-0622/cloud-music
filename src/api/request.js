@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://127.0.0.1:3002'
+axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 5000
 
 export default {
