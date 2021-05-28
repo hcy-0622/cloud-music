@@ -37,8 +37,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .song {
   width: 100%;

@@ -25,8 +25,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .header {
   z-index: 999;
@@ -42,7 +42,7 @@ export default {
     margin-top: 8px;
   }
   .header-left {
-    @include bg_img('../../assets/images/down');
+    @include bg_img('../../../assets/images/down');
   }
   /* .header-right {
     @include bg_img('../../assets/images/more');

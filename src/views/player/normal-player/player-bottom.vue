@@ -26,8 +26,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .player-bottom {
   position: fixed;
@@ -79,19 +79,19 @@ export default {
       height: 84px;
     }
     .mode {
-      @include bg_img('../../assets/images/loop');
+      @include bg_img('../../../assets/images/loop');
     }
     .prev {
-      @include bg_img('../../assets/images/prev');
+      @include bg_img('../../../assets/images/prev');
     }
     .play {
-      @include bg_img('../../assets/images/pause');
+      @include bg_img('../../../assets/images/pause');
     }
     .next {
-      @include bg_img('../../assets/images/next');
+      @include bg_img('../../../assets/images/next');
     }
     .favorite {
-      @include bg_img('../../assets/images/un_favorite');
+      @include bg_img('../../../assets/images/un_favorite');
     }
   }
 }

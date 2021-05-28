@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import NormalPlayer from './normal-player.vue'
-import MiniPlayer from './mini-player.vue'
-import ListPlayer from './list-player.vue'
+import NormalPlayer from './normal-player/index.vue'
+import MiniPlayer from './mini-player/index.vue'
+import ListPlayer from './list-player/index.vue'
 
 export default {
   components: { NormalPlayer, MiniPlayer, ListPlayer },

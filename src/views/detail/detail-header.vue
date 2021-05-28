@@ -38,8 +38,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .header {
   width: 100%;

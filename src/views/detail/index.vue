@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/mixins';
 
 .detail {
   position: fixed;

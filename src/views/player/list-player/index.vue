@@ -56,8 +56,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .list-player {
   position: fixed;
@@ -80,7 +80,7 @@ export default {
           width: 56px;
           height: 56px;
           margin-right: 20px;
-          @include bg_img('../../assets/images/small_loop');
+          @include bg_img('../../../assets/images/small_loop');
         }
         p {
           @include font_size($font_medium_s);
@@ -91,7 +91,7 @@ export default {
         .del {
           width: 84px;
           height: 84px;
-          @include bg_img('../../assets/images/small_del');
+          @include bg_img('../../../assets/images/small_del');
         }
       }
     }
@@ -111,7 +111,7 @@ export default {
             width: 56px;
             height: 56px;
             margin-right: 20px;
-            @include bg_img('../../assets/images/small_play');
+            @include bg_img('../../../assets/images/small_play');
           }
           p {
             @include font_size($font_medium_s);
@@ -124,13 +124,13 @@ export default {
           .item-favorite {
             width: 56px;
             height: 56px;
-            @include bg_img('../../assets/images/small_favorite');
+            @include bg_img('../../../assets/images/small_favorite');
           }
           .item-close {
             width: 52px;
             height: 52px;
             margin-left: 20px;
-            @include bg_img('../../assets/images/small_close');
+            @include bg_img('../../../assets/images/small_close');
           }
         }
       }

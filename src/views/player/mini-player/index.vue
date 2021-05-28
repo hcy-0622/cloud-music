@@ -41,8 +41,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .mini-player {
   position: fixed;
@@ -87,12 +87,12 @@ export default {
       .play {
         width: 84px;
         height: 84px;
-        @include bg_img('../../assets/images/play');
+        @include bg_img('../../../assets/images/play');
       }
       .list {
         width: 120px;
         height: 120px;
-        @include bg_img('../../assets/images/list');
+        @include bg_img('../../../assets/images/list');
       }
     }
   }

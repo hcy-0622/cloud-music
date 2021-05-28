@@ -99,8 +99,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .banner {
   position: fixed;
@@ -143,7 +143,7 @@ export default {
 }
 </style>
 <style lang="scss">
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/mixins';
 
 .my-bullet {
   display: inline-block;
