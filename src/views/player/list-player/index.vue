@@ -1,40 +1,46 @@
 <template>
-  <div class="list-player" v-show="isShow">
-    <div class="player-wrapper">
-      <div class="player-top">
-        <div class="top-left">
-          <div class="mode"></div>
-          <p>顺序播放</p>
+  <transition :css="false" @enter="enter" @leave="leave">
+    <div class="list-player" v-show="isShow">
+      <div class="player-wrapper">
+        <div class="player-top">
+          <div class="top-left">
+            <div class="mode"></div>
+            <p>顺序播放</p>
+          </div>
+          <div class="top-right">
+            <div class="del"></div>
+          </div>
         </div>
-        <div class="top-right">
-          <div class="del"></div>
+        <div class="player-middle">
+          <scroll-view>
+            <ul>
+              <li class="item">
+                <div class="item-left">
+                  <div class="item-play"></div>
+                  <p>演员</p>
+                </div>
+                <div class="item-right">
+                  <div class="item-favorite"></div>
+                  <div class="item-close"></div>
+                </div>
+              </li>
+            </ul>
+          </scroll-view>
         </div>
-      </div>
-      <div class="player-middle">
-        <scroll-view>
-          <ul>
-            <li class="item">
-              <div class="item-left">
-                <div class="item-play"></div>
-                <p>演员</p>
-              </div>
-              <div class="item-right">
-                <div class="item-favorite"></div>
-                <div class="item-close"></div>
-              </div>
-            </li>
-          </ul>
-        </scroll-view>
-      </div>
-      <div class="player-bottom">
-        <p @click.stop="hidden">关闭</p>
+        <div class="player-bottom">
+          <p @click.stop="hidden">关闭</p>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
+import Velocity from 'velocity-animate'
+import 'velocity-animate/velocity.ui'
+
 import ScrollView from '@/components/scroll-view.vue'
+import { ANIMATE_DURATION } from '@/constants'
 
 export default {
   name: 'ListPlayer',
@@ -50,6 +56,12 @@ export default {
     },
     hidden() {
       this.isShow = false
+    },
+    enter(el, done) {
+      Velocity(el, 'transition.perspectiveUpIn', { duration: ANIMATE_DURATION }, () => done())
+    },
+    leave(el, done) {
+      Velocity(el, 'transition.perspectiveUpOut', { duration: ANIMATE_DURATION }, () => done())
     }
   }
 }
