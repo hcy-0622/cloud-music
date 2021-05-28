@@ -1,4 +1,4 @@
-@import "./variable.scss";
+@import "./variables";
 
 /*根据dpr计算font-size*/
 @mixin font_dpr($font-size) {

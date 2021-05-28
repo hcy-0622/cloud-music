@@ -1,13 +1,26 @@
 <template>
   <div id="app">
-    <div class="test">我爱上的个哈哈个</div>
+    <my-header></my-header>
+    <my-tabbar></my-tabbar>
+    <router-view></router-view>
+    <my-player></my-player>
   </div>
 </template>
 
-<style lang="scss">
-.test {
-  background: yellow;
-  transform: translate(100px, 100px);
-  font-size: 66Px;
+<script>
+import Header from './components/header.vue'
+import Tabbar from './components/tabbar.vue'
+import Player from './views/player/index.vue'
+
+export default {
+  name: 'App',
+  components: {
+    MyHeader: Header,
+    MyTabbar: Tabbar,
+    MyPlayer: Player
+  }
 }
+</script>
+
+<style lang="scss" scoped>
 </style>

@@ -21,11 +21,12 @@
   <!-- 适配移动端 -->
   <script>
     const scale = 1.0 / window.devicePixelRatio;
-    const text =
+    const viewportMeta =
       `<meta name="viewport" content="width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}, user-scalable=no">`;
-    document.write(text);
+    document.write(viewportMeta)
     document.documentElement.style.fontSize = window.innerWidth / 7.5 + "px";
     document.documentElement.setAttribute('data-dpr', window.devicePixelRatio + '');
+    document.documentElement.setAttribute('data-theme', 'theme')
   </script>
 </head>
 
