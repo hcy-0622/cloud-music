@@ -32,8 +32,7 @@ export default {
   width: 100%;
   li {
     width: 100%;
-    height: 100px;
-    padding: 20px;
+    padding: 12px 20px;
     box-sizing: border-box;
     border-bottom: 1px solid #ccc;
     @include bg_sub_color();
