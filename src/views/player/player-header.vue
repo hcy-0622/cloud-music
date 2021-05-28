@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="header-left"></div>
+    <div class="header-left" @click="hiddenPlayer"></div>
     <div class="header-title">
       <h3>演员</h3>
       <p>薛之谦</p>
@@ -10,8 +10,17 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'PlayerHeader'
+  name: 'PlayerHeader',
+  methods: {
+    ...mapActions(['setFullScreen', 'setMiniPlayer']),
+    hiddenPlayer() {
+      this.setFullScreen(false)
+      this.setMiniPlayer(true)
+    }
+  }
 }
 </script>
 
@@ -20,6 +29,7 @@ export default {
 @import '../../assets/styles/mixins';
 
 .header {
+  z-index: 999;
   width: 100%;
   height: 100px;
   display: flex;
