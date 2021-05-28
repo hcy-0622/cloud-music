@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'SubHeader',
+  name: 'DetailHeader',
   props: {
     title: {
       type: String,

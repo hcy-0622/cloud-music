@@ -1,6 +1,6 @@
 <template>
   <div class="detail">
-    <sub-header :title="playList.name"></sub-header>
+    <detail-header :title="playList.name"></detail-header>
     <detail-top :path="playList.coverImgUrl" ref="top"></detail-top>
     <div class="bottom">
       <scroll-view ref="scrollView">
@@ -13,13 +13,13 @@
 <script>
 import { getAlbum, getPlayList } from '@/api'
 import ScrollView from '@/components/scroll-view.vue'
-import SubHeader from './sub-header.vue'
+import DetailHeader from './detail-header.vue'
 import DetailTop from './detail-top.vue'
 import DetailBottom from './detail-bottom.vue'
 
 export default {
   name: 'Detail',
-  components: { SubHeader, DetailTop, DetailBottom, ScrollView },
+  components: { DetailHeader, DetailTop, DetailBottom, ScrollView },
   data() {
     return {
       playList: {}
