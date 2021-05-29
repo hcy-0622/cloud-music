@@ -1,7 +1,7 @@
 <template>
   <swiper class="banner" :options="swiperOptions">
     <swiper-slide class="cd">
-      <div class="cd-wrapper">
+      <div :class="['cd-wrapper', isPlaying ? 'active' : '']">
         <img
           src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201509%2F15%2F20150915135644_dBiyk.thumb.700_0.png&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624769894&t=fc450cb32846a4c76bb9d3dcc4e80312"
           alt
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import ScrollView from '@/components/scroll-view.vue'
@@ -94,6 +95,9 @@ export default {
         observeSlideChildren: true
       }
     }
+  },
+  computed: {
+    ...mapGetters(['isPlaying'])
   }
 }
 </script>
@@ -117,6 +121,11 @@ export default {
       border-radius: 50%;
       border: 30px solid greenyellow;
       overflow: hidden;
+      animation: sport 4s linear infinite;
+      animation-play-state: paused;
+      &.active {
+        animation-play-state: running;
+      }
       img {
         width: 100%;
         height: 100%;
@@ -139,6 +148,14 @@ export default {
         padding-bottom: 100px;
       }
     }
+  }
+}
+@keyframes sport {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

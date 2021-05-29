@@ -1,11 +1,11 @@
 <template>
   <transition :css="false" @enter="enter" @leave="leave">
-    <div class="list-player" v-show="isShow">
+    <div class="list-player" v-show="isShowListPlayer">
       <div class="player-wrapper">
         <div class="player-top">
           <div class="top-left">
-            <div class="mode"></div>
-            <p>顺序播放</p>
+            <div :class="modeClass" @click="changeMode"></div>
+            <p>{{ modeText }}</p>
           </div>
           <div class="top-right">
             <div class="del"></div>
@@ -16,7 +16,7 @@
             <ul>
               <li class="item">
                 <div class="item-left">
-                  <div class="item-play"></div>
+                  <div :class="playItemClass" @click="play"></div>
                   <p>演员</p>
                 </div>
                 <div class="item-right">
@@ -28,7 +28,7 @@
           </scroll-view>
         </div>
         <div class="player-bottom">
-          <p @click.stop="hidden">关闭</p>
+          <p @click.stop="hide">关闭</p>
         </div>
       </div>
     </div>
@@ -36,26 +36,63 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import Velocity from 'velocity-animate'
 import 'velocity-animate/velocity.ui'
 
 import ScrollView from '@/components/scroll-view.vue'
-import { ANIMATE_DURATION } from '@/constants'
+import { ANIMATE_DURATION, PLAY_MODE } from '@/constants'
 
 export default {
   name: 'ListPlayer',
   components: { ScrollView },
-  data() {
-    return {
-      isShow: false
+  computed: {
+    ...mapGetters(['isPlaying', 'playMode', 'isShowListPlayer']),
+    modeClass() {
+      return {
+        mode: true,
+        loop: this.playMode === PLAY_MODE.loop,
+        one: this.playMode === PLAY_MODE.one,
+        random: this.playMode === PLAY_MODE.random
+      }
+    },
+    modeText() {
+      let text = ''
+      if (this.playMode === PLAY_MODE.loop) {
+        text = '顺序播放'
+      } else if (this.playMode === PLAY_MODE.one) {
+        text = '单曲播放'
+      } else if (this.playMode === PLAY_MODE.random) {
+        text = '随机播放'
+      }
+
+      return text
+    },
+    playItemClass() {
+      return {
+        'item-play': true,
+        active: this.isPlaying
+      }
     }
   },
   methods: {
-    show() {
-      this.isShow = true
+    ...mapActions(['setIsPlaying', 'setPlayMode', 'setListPlayer']),
+    hide() {
+      this.setListPlayer(false)
     },
-    hidden() {
-      this.isShow = false
+    play() {
+      this.setIsPlaying(!this.isPlaying)
+    },
+    changeMode() {
+      let mode = PLAY_MODE.loop
+      if (this.playMode === PLAY_MODE.loop) {
+        mode = PLAY_MODE.one
+      } else if (this.playMode === PLAY_MODE.one) {
+        mode = PLAY_MODE.random
+      } else if (this.playMode === PLAY_MODE.random) {
+        mode = PLAY_MODE.loop
+      }
+      this.setPlayMode(mode)
     },
     enter(el, done) {
       Velocity(el, 'transition.perspectiveUpIn', { duration: ANIMATE_DURATION }, () => done())
@@ -92,7 +129,15 @@ export default {
           width: 56px;
           height: 56px;
           margin-right: 20px;
-          @include bg_img('../../../assets/images/small_loop');
+          &.loop {
+            @include bg_img('../../../assets/images/small_loop');
+          }
+          &.one {
+            @include bg_img('../../../assets/images/small_one');
+          }
+          &.random {
+            @include bg_img('../../../assets/images/small_shuffle');
+          }
         }
         p {
           @include font_size($font_medium_s);
@@ -124,6 +169,9 @@ export default {
             height: 56px;
             margin-right: 20px;
             @include bg_img('../../../assets/images/small_play');
+            &.active {
+              @include bg_img('../../../assets/images/small_pause');
+            }
           }
           p {
             @include font_size($font_medium_s);

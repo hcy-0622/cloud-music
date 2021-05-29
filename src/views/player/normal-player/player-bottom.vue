@@ -10,9 +10,9 @@
       <span>00:00</span>
     </div>
     <div class="bottom-control">
-      <div class="mode"></div>
+      <div :class="modeClass" @click="changeMode"></div>
       <div class="prev"></div>
-      <div class="play"></div>
+      <div :class="playClass" @click="play"></div>
       <div class="next"></div>
       <div class="favorite"></div>
     </div>
@@ -20,8 +20,45 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import { PLAY_MODE } from '@/constants'
+
 export default {
-  name: 'PlayerBottom'
+  name: 'PlayerBottom',
+  computed: {
+    ...mapGetters(['isPlaying', 'playMode']),
+    modeClass() {
+      return {
+        mode: true,
+        loop: this.playMode === PLAY_MODE.loop,
+        one: this.playMode === PLAY_MODE.one,
+        random: this.playMode === PLAY_MODE.random
+      }
+    },
+    playClass() {
+      return {
+        play: true,
+        active: this.isPlaying
+      }
+    }
+  },
+  methods: {
+    ...mapActions(['setIsPlaying', 'setPlayMode']),
+    play() {
+      this.setIsPlaying(!this.isPlaying)
+    },
+    changeMode() {
+      let mode = PLAY_MODE.loop
+      if (this.playMode === PLAY_MODE.loop) {
+        mode = PLAY_MODE.one
+      } else if (this.playMode === PLAY_MODE.one) {
+        mode = PLAY_MODE.random
+      } else if (this.playMode === PLAY_MODE.random) {
+        mode = PLAY_MODE.loop
+      }
+      this.setPlayMode(mode)
+    }
+  }
 }
 </script>
 
@@ -30,6 +67,7 @@ export default {
 @import '@/assets/styles/mixins';
 
 .player-bottom {
+  z-index: 999;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -79,13 +117,24 @@ export default {
       height: 84px;
     }
     .mode {
-      @include bg_img('../../../assets/images/loop');
+      &.loop {
+        @include bg_img('../../../assets/images/loop');
+      }
+      &.one {
+        @include bg_img('../../../assets/images/one');
+      }
+      &.random {
+        @include bg_img('../../../assets/images/shuffle');
+      }
     }
     .prev {
       @include bg_img('../../../assets/images/prev');
     }
     .play {
-      @include bg_img('../../../assets/images/pause');
+      @include bg_img('../../../assets/images/play');
+      &.active {
+        @include bg_img('../../../assets/images/pause');
+      }
     }
     .next {
       @include bg_img('../../../assets/images/next');

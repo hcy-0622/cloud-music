@@ -25,12 +25,17 @@ export default {
       click: true,
       tap: true
     })
+    const _this = this
+    this.scroll.on('scroll', function () {
+      _this.$emit('scroll', this.y)
+    })
 
     // 创建一个观察者对象
     const observer = new MutationObserver((mutationList, observer) => {
       // console.log('Mutation observer: ', this.iScroll.maxScrollY, mutationList, observer)
       this.scroll.refresh()
     })
+    // 观察者的配置项
     const config = {
       childList: true,
       subtree: true,
@@ -38,14 +43,14 @@ export default {
     }
     // 观察者对象和需要观察的内容
     observer.observe(wrapperEl, config)
-  },
-  methods: {
-    scrolling(fn) {
-      this.scroll.on('scroll', function () {
-        fn(this.y)
-      })
-    }
   }
+  // methods: {
+  //   scrolling(fn) {
+  //     this.scroll.on('scroll', function () {
+  //       fn(this.y)
+  //     })
+  //   }
+  // }
 }
 </script>
 

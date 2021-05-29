@@ -1,2 +1,5 @@
 export const SET_FULL_SCREEN = 'set_full_screen'
 export const SET_MINI_PLAYER = 'set_mini_player'
+export const SET_LIST_PLAYER = 'set_list_player'
+export const SET_IS_PLAYING = 'set_is_playing'
+export const SET_PLAY_MODE = 'set_play_mode'

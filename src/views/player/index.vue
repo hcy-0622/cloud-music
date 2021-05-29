@@ -1,8 +1,8 @@
 <template>
   <div class="player">
     <normal-player></normal-player>
-    <mini-player @show-list="showList"></mini-player>
-    <list-player ref="listPlayer"></list-player>
+    <mini-player></mini-player>
+    <list-player></list-player>
   </div>
 </template>
 
@@ -13,12 +13,7 @@ import ListPlayer from './list-player/index.vue'
 
 export default {
   components: { NormalPlayer, MiniPlayer, ListPlayer },
-  name: 'Player',
-  methods: {
-    showList() {
-      this.$refs.listPlayer.show()
-    }
-  }
+  name: 'Player'
 }
 </script>
 
