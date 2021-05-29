@@ -8,20 +8,20 @@
             <p>{{ modeText }}</p>
           </div>
           <div class="top-right">
-            <div class="del"></div>
+            <div class="del" @click="delAllSong"></div>
           </div>
         </div>
         <div class="player-middle">
-          <scroll-view>
+          <scroll-view ref="sv">
             <ul>
-              <li class="item">
+              <li class="item" v-for="(s, i) of songs" :key="s.id" @click="selectMusic(i)">
                 <div class="item-left">
-                  <div :class="playItemClass" @click="play"></div>
-                  <p>演员</p>
+                  <div :class="playItemClass" v-show="currentSongIndex === i" @click.stop="play"></div>
+                  <p>{{ s.name }}</p>
                 </div>
                 <div class="item-right">
                   <div class="item-favorite"></div>
-                  <div class="item-close"></div>
+                  <div class="item-close" @click.stop="delSongByIndex(i)"></div>
                 </div>
               </li>
             </ul>
@@ -47,7 +47,13 @@ export default {
   name: 'ListPlayer',
   components: { ScrollView },
   computed: {
-    ...mapGetters(['isPlaying', 'playMode', 'isShowListPlayer']),
+    ...mapGetters([
+      'isPlaying',
+      'playMode',
+      'isShowListPlayer',
+      'songs',
+      'currentSongIndex'
+    ]),
     modeClass() {
       return {
         mode: true,
@@ -75,8 +81,21 @@ export default {
       }
     }
   },
+  watch: {
+    isShowListPlayer(curVal, prevVal) {
+      if (curVal) {
+        this.$refs.sv.delayRefresh()
+      }
+    }
+  },
   methods: {
-    ...mapActions(['setIsPlaying', 'setPlayMode', 'setListPlayer']),
+    ...mapActions([
+      'setIsPlaying',
+      'setPlayMode',
+      'setListPlayer',
+      'delSong',
+      'setCurrentSongIndex'
+    ]),
     hide() {
       this.setListPlayer(false)
     },
@@ -94,6 +113,16 @@ export default {
       }
       this.setPlayMode(mode)
     },
+    delSongByIndex(idx) {
+      this.delSong(idx)
+    },
+    delAllSong() {
+      this.delSong()
+    },
+    selectMusic(idx) {
+      this.setCurrentSongIndex(idx)
+    },
+    // 动画
     enter(el, done) {
       Velocity(el, 'transition.perspectiveUpIn', { duration: ANIMATE_DURATION }, () => done())
     },
@@ -153,6 +182,8 @@ export default {
       }
     }
     .player-middle {
+      height: 700px;
+      overflow: hidden;
       .item {
         border-top: 1px solid #ccc;
         height: 100px;

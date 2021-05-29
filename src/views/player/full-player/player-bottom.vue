@@ -11,9 +11,9 @@
     </div>
     <div class="bottom-control">
       <div :class="modeClass" @click="changeMode"></div>
-      <div class="prev"></div>
+      <div class="prev" @click="prev"></div>
       <div :class="playClass" @click="play"></div>
-      <div class="next"></div>
+      <div class="next" @click="next"></div>
       <div class="favorite"></div>
     </div>
   </div>
@@ -26,7 +26,7 @@ import { PLAY_MODE } from '@/constants'
 export default {
   name: 'PlayerBottom',
   computed: {
-    ...mapGetters(['isPlaying', 'playMode']),
+    ...mapGetters(['isPlaying', 'playMode', 'currentSongIndex']),
     modeClass() {
       return {
         mode: true,
@@ -43,9 +43,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setIsPlaying', 'setPlayMode']),
+    ...mapActions(['setIsPlaying', 'setPlayMode', 'setCurrentSongIndex']),
     play() {
       this.setIsPlaying(!this.isPlaying)
+    },
+    prev() {
+      this.setCurrentSongIndex(this.currentSongIndex - 1)
+    },
+    next() {
+      this.setCurrentSongIndex(this.currentSongIndex + 1)
     },
     changeMode() {
       let mode = PLAY_MODE.loop

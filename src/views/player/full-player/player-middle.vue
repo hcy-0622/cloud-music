@@ -2,66 +2,14 @@
   <swiper class="banner" :options="swiperOptions">
     <swiper-slide class="cd">
       <div :class="['cd-wrapper', isPlaying ? 'active' : '']">
-        <img
-          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201509%2F15%2F20150915135644_dBiyk.thumb.700_0.png&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624769894&t=fc450cb32846a4c76bb9d3dcc4e80312"
-          alt
-        />
+        <img :src="currentSong.picUrl" alt />
       </div>
-      <p>阿三哥佳士科技干哈就是个</p>
+      <p>{{ firstLyric }}</p>
     </swiper-slide>
     <swiper-slide class="lyric">
       <scroll-view>
         <ul>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
-          <li>我是一句歌词</li>
+          <li v-for="(v, i) of currentSongLyric" :key="i">{{ v }}</li>
         </ul>
       </scroll-view>
     </swiper-slide>
@@ -97,7 +45,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isPlaying'])
+    ...mapGetters(['isPlaying', 'currentSong', 'currentSongLyric']),
+    firstLyric() {
+      const firstKey = Object.keys(this.currentSongLyric)[0]
+      return this.currentSongLyric[firstKey]
+    }
   }
 }
 </script>

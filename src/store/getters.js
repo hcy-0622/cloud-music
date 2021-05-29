@@ -1,6 +1,6 @@
 export default {
-  isFullScreen(state) {
-    return state.isFullScreen
+  isShowFullPlayer(state) {
+    return state.isShowFullPlayer
   },
   isShowMiniPlayer(state) {
     return state.isShowMiniPlayer
@@ -13,5 +13,21 @@ export default {
   },
   playMode(state) {
     return state.playMode
+  },
+  songs(state) {
+    return state.songs
+  },
+  currentSong(state) {
+    let song = { name: '', singer: '', picUrl: '' }
+    if (state.songs.length) {
+      song = state.songs[state.currentSongIndex]
+    }
+    return song
+  },
+  currentSongLyric(state) {
+    return state.currentSongLyric
+  },
+  currentSongIndex(state) {
+    return state.currentSongIndex
   }
 }

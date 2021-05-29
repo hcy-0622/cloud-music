@@ -1,23 +1,20 @@
 <template>
   <transition :css="false" @enter="enter" @leave="leave">
-    <div class="normal-player" v-show="isFullScreen">
+    <div class="full-player" v-show="isShowFullPlayer">
       <div class="palyer-wrapper">
         <player-header></player-header>
         <player-middle></player-middle>
         <player-bottom></player-bottom>
       </div>
       <div class="player-bg">
-        <img
-          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201509%2F15%2F20150915135644_dBiyk.thumb.700_0.png&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1624769894&t=fc450cb32846a4c76bb9d3dcc4e80312"
-          alt
-        />
+        <img :src="currentSong.picUrl" alt />
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Velocity from 'velocity-animate'
 import 'velocity-animate/velocity.ui'
 
@@ -27,12 +24,20 @@ import PlayerMiddle from './player-middle.vue'
 import { ANIMATE_DURATION } from '@/constants'
 
 export default {
-  name: 'NormalPlayer',
+  name: 'FullPlayer',
   components: { playerHeader, PlayerMiddle, PlayerBottom },
   computed: {
-    ...mapGetters(['isFullScreen'])
+    ...mapGetters(['isShowFullPlayer', 'currentSong'])
+  },
+  watch: {
+    currentSong(curVal, prevVal) {
+      if (curVal.id) {
+        this.getSongLyric(curVal.id)
+      }
+    }
   },
   methods: {
+    ...mapActions(['getSongLyric']),
     enter(el, done) {
       Velocity(el, 'transition.shrinkIn', { duration: ANIMATE_DURATION }, () => done())
     },
@@ -47,7 +52,7 @@ export default {
 @import '@/assets/styles/variables.scss';
 @import '@/assets/styles/mixins';
 
-.normal-player {
+.full-player {
   position: fixed;
   top: 0;
   right: 0;

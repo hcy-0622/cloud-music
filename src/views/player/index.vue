@@ -1,19 +1,25 @@
 <template>
   <div class="player">
-    <normal-player></normal-player>
+    <full-player></full-player>
     <mini-player></mini-player>
     <list-player></list-player>
+    <audio src="currentSong.url"></audio>
   </div>
 </template>
 
 <script>
-import NormalPlayer from './normal-player/index.vue'
+import { mapGetters } from 'vuex'
+
+import FullPlayer from './full-player/index.vue'
 import MiniPlayer from './mini-player/index.vue'
 import ListPlayer from './list-player/index.vue'
 
 export default {
-  components: { NormalPlayer, MiniPlayer, ListPlayer },
-  name: 'Player'
+  components: { FullPlayer, MiniPlayer, ListPlayer },
+  name: 'Player',
+  computed: {
+    ...mapGetters(['currentSong'])
+  }
 }
 </script>
 

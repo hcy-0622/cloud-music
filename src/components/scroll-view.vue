@@ -43,14 +43,19 @@ export default {
     }
     // 观察者对象和需要观察的内容
     observer.observe(wrapperEl, config)
+  },
+  methods: {
+    delayRefresh() {
+      setTimeout(() => {
+        this.scroll.refresh()
+      }, 200)
+    }
+    // scrolling(fn) {
+    //   this.scroll.on('scroll', function () {
+    //     fn(this.y)
+    //   })
+    // }
   }
-  // methods: {
-  //   scrolling(fn) {
-  //     this.scroll.on('scroll', function () {
-  //       fn(this.y)
-  //     })
-  //   }
-  // }
 }
 </script>
 

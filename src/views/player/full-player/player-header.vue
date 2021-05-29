@@ -2,22 +2,25 @@
   <div class="header">
     <div class="header-left" @click="hiddenPlayer"></div>
     <div class="header-title">
-      <h3>演员</h3>
-      <p>薛之谦</p>
+      <h3>{{ currentSong.name }}</h3>
+      <p>{{ currentSong.singer }}</p>
     </div>
     <div class="header-right"></div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'PlayerHeader',
+  computed: {
+    ...mapGetters(['currentSong'])
+  },
   methods: {
-    ...mapActions(['setFullScreen', 'setMiniPlayer']),
+    ...mapActions(['setFullPlayer', 'setMiniPlayer']),
     hiddenPlayer() {
-      this.setFullScreen(false)
+      this.setFullPlayer(false)
       this.setMiniPlayer(true)
     }
   }

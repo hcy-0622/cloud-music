@@ -4,7 +4,7 @@
       <h3>最新音乐</h3>
     </div>
     <ul class="song-list">
-      <li class="song-item" v-for="s of songs" :key="s.id" @click="selectMusic">
+      <li class="song-item" v-for="s of songs" :key="s.id" @click="selectMusic(s.id)">
         <img v-lazy="s.song.album.picUrl" alt />
         <div>
           <h3>{{ s.name }}</h3>
@@ -28,9 +28,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setFullScreen']),
-    selectMusic() {
-      this.setFullScreen(true)
+    ...mapActions(['setFullPlayer', 'setSongDetail']),
+    selectMusic(id) {
+      this.setFullPlayer(true)
+      this.setSongDetail([id])
     }
   }
 }
