@@ -1,13 +1,13 @@
 <template>
   <div class="player-bottom">
     <div class="bottom-progress">
-      <span>00:00</span>
-      <div class="progress-bar">
-        <div class="progress-line">
+      <span>{{ currentTimeFormatted }}</span>
+      <div class="progress-bar" @click="progressClick">
+        <div class="progress-line" :style="{ width: currentProgress + '%' }">
           <div class="progress-dot"></div>
         </div>
       </div>
-      <span>00:00</span>
+      <span>{{ totalTimeFormatted }}</span>
     </div>
     <div class="bottom-control">
       <div :class="modeClass" @click="changeMode"></div>
@@ -22,9 +22,27 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { PLAY_MODE } from '@/constants'
+import { formatTime } from '@/utils'
 
 export default {
   name: 'PlayerBottom',
+  props: {
+    totalTime: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+    currentTime: {
+      type: Number,
+      default: 0,
+      required: true
+    }
+  },
+  data() {
+    return {
+      currentProgress: 0
+    }
+  },
   computed: {
     ...mapGetters(['isPlaying', 'playMode', 'currentSongIndex']),
     modeClass() {
@@ -40,10 +58,28 @@ export default {
         play: true,
         active: this.isPlaying
       }
+    },
+    totalTimeFormatted() {
+      const time = formatTime(this.totalTime)
+      return time.minute + ':' + time.second
+    },
+    currentTimeFormatted() {
+      const time = formatTime(this.currentTime)
+      return time.minute + ':' + time.second
+    }
+  },
+  watch: {
+    currentTime(curVal) {
+      this.currentProgress = curVal / this.totalTime * 100
     }
   },
   methods: {
-    ...mapActions(['setIsPlaying', 'setPlayMode', 'setCurrentSongIndex']),
+    ...mapActions([
+      'setIsPlaying',
+      'setPlayMode',
+      'setCurrentSongIndex',
+      'setPlayerCurrentTime'
+    ]),
     play() {
       this.setIsPlaying(!this.isPlaying)
     },
@@ -63,6 +99,18 @@ export default {
         mode = PLAY_MODE.loop
       }
       this.setPlayMode(mode)
+    },
+    progressClick(e) {
+      // 计算进度条的位置
+      const offsetLeft = e.target.offsetLeft
+      const eventLeft = e.pageX
+      const clickLeft = eventLeft - offsetLeft
+      const progressWidth = e.target.offsetWidth
+      const rate = clickLeft / progressWidth
+      this.currentProgress = rate * 100
+      // 计算从什么地方播放
+      const currentTime = this.totalTime * rate
+      this.setPlayerCurrentTime(currentTime)
     }
   }
 }
@@ -92,16 +140,16 @@ export default {
       width: 100%;
       height: 10px;
       background: #fff;
-      position: relative;
       margin: 0 10px;
       .progress-line {
-        width: 50%;
+        position: relative;
+        width: 0%;
         height: 100%;
         background: #ccc;
         .progress-dot {
           position: absolute;
           top: 50%;
-          left: 50%;
+          left: 100%;
           transform: translateY(-50%);
           width: 20px;
           height: 20px;

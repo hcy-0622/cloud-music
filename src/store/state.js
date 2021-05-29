@@ -10,5 +10,6 @@ export default {
   songs: [], // 播放列表中的歌曲
   currentSong: {}, // 当前播放的歌曲
   currentSongLyric: {},
-  currentSongIndex: 0 // 当前播放歌曲的索引
+  currentSongIndex: 0, // 当前播放歌曲的索引
+  playerCurrentTime: 0 // 播放器当前时间
 }

@@ -7,7 +7,8 @@ import {
   SET_PLAY_MODE,
   SET_SONG_DETAIL,
   SET_SONG_LYRIC,
-  SET_CURRENT_SONG_INDEX
+  SET_CURRENT_SONG_INDEX,
+  SET_PLAYER_CURRENT_TIME
 } from './types'
 
 export default {
@@ -62,5 +63,8 @@ export default {
       idx = 0
     }
     state.currentSongIndex = idx
+  },
+  [SET_PLAYER_CURRENT_TIME](state, time) {
+    state.playerCurrentTime = time
   }
 }

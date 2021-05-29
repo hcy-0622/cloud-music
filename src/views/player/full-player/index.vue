@@ -3,8 +3,8 @@
     <div class="full-player" v-show="isShowFullPlayer">
       <div class="palyer-wrapper">
         <player-header></player-header>
-        <player-middle></player-middle>
-        <player-bottom></player-bottom>
+        <player-middle :current-time="currentTime"></player-middle>
+        <player-bottom :total-time="totalTime" :current-time="currentTime"></player-bottom>
       </div>
       <div class="player-bg">
         <img :src="currentSong.picUrl" alt />
@@ -26,6 +26,18 @@ import { ANIMATE_DURATION } from '@/constants'
 export default {
   name: 'FullPlayer',
   components: { playerHeader, PlayerMiddle, PlayerBottom },
+  props: {
+    totalTime: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+    currentTime: {
+      type: Number,
+      default: 0,
+      required: true
+    }
+  },
   computed: {
     ...mapGetters(['isShowFullPlayer', 'currentSong'])
   },

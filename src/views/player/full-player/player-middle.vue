@@ -9,7 +9,11 @@
     <swiper-slide class="lyric">
       <scroll-view>
         <ul>
-          <li v-for="(v, i) of currentSongLyric" :key="i">{{ v }}</li>
+          <li
+            :class="{active: currentLineNum === Number(k)}"
+            v-for="(v, k) of currentSongLyric"
+            :key="k"
+          >{{ v }}</li>
         </ul>
       </scroll-view>
     </swiper-slide>
@@ -30,6 +34,13 @@ export default {
     SwiperSlide,
     ScrollView
   },
+  props: {
+    currentTime: {
+      type: Number,
+      default: 0,
+      required: true
+    }
+  },
   data() {
     return {
       swiperOptions: {
@@ -41,7 +52,8 @@ export default {
         observer: true,
         observeParents: true,
         observeSlideChildren: true
-      }
+      },
+      currentLineNum: 0
     }
   },
   computed: {
@@ -49,6 +61,15 @@ export default {
     firstLyric() {
       const firstKey = Object.keys(this.currentSongLyric)[0]
       return this.currentSongLyric[firstKey]
+    }
+  },
+  watch: {
+    currentTime(curVal) {
+      const lineNum = Math.floor(curVal)
+      const result = this.currentSongLyric[lineNum]
+      if (result) {
+        this.currentLineNum = Math.floor(curVal)
+      }
     }
   }
 }
@@ -98,6 +119,9 @@ export default {
       margin: 10px 0;
       &:last-of-type {
         padding-bottom: 100px;
+      }
+      &.active {
+        color: #fff;
       }
     }
   }

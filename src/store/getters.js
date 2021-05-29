@@ -29,5 +29,8 @@ export default {
   },
   currentSongIndex(state) {
     return state.currentSongIndex
+  },
+  playerCurrentTime(state) {
+    return state.playerCurrentTime
   }
 }

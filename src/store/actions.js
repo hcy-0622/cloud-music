@@ -7,6 +7,7 @@ import {
   SET_IS_PLAYING,
   SET_LIST_PLAYER,
   SET_MINI_PLAYER,
+  SET_PLAYER_CURRENT_TIME,
   SET_PLAY_MODE,
   SET_SONG_DETAIL,
   SET_SONG_LYRIC
@@ -64,5 +65,8 @@ export default {
   },
   setCurrentSongIndex({ commit }, idx) {
     commit(SET_CURRENT_SONG_INDEX, idx)
+  },
+  setPlayerCurrentTime({ commit }, time) {
+    commit(SET_PLAYER_CURRENT_TIME, time)
   }
 }
