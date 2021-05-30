@@ -8,16 +8,16 @@
 </template>
 
 <script>
-import Header from './components/header.vue'
-import Tabbar from './components/tabbar.vue'
-import Player from './views/player/index.vue'
+import MyHeader from './components/header.vue'
+import MyTabbar from './components/tabbar.vue'
+import MyPlayer from './components/player/index.vue'
 
 export default {
   name: 'App',
   components: {
-    MyHeader: Header,
-    MyTabbar: Tabbar,
-    MyPlayer: Player
+    MyHeader,
+    MyTabbar,
+    MyPlayer
   }
 }
 </script>

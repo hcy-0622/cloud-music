@@ -5,3 +5,4 @@ export const PLAY_MODE = {
   random: 2
 }
 export const FAVORITE_LIST_KEY = 'favorite_list'
+export const HISTORY_LIST_KEY = 'history_list'

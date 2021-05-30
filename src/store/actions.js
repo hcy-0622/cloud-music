@@ -6,6 +6,8 @@ import {
   SET_FAVORITE_LIST,
   SET_FAVORITE_SONG,
   SET_FULL_PLAYER,
+  SET_HISTORY_LIST,
+  SET_HISTORY_SONG,
   SET_IS_PLAYING,
   SET_LIST_PLAYER,
   SET_MINI_PLAYER,
@@ -84,5 +86,11 @@ export default {
   },
   setFavoriteList({ commit }, list) {
     commit(SET_FAVORITE_LIST, list)
+  },
+  setHistorySong({ commit }, song) {
+    commit(SET_HISTORY_SONG, song)
+  },
+  setHistoryList({ commit }, list) {
+    commit(SET_HISTORY_LIST, list)
   }
 }

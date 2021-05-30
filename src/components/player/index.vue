@@ -18,7 +18,7 @@ import { mapGetters, mapActions } from 'vuex'
 import FullPlayer from './full-player/index.vue'
 import MiniPlayer from './mini-player/index.vue'
 import ListPlayer from './list-player/index.vue'
-import { FAVORITE_LIST_KEY, PLAY_MODE } from '@/constants'
+import { FAVORITE_LIST_KEY, HISTORY_LIST_KEY, PLAY_MODE } from '@/constants'
 import { getRandomIntInclusive } from '@/utils'
 
 export default {
@@ -31,9 +31,14 @@ export default {
     }
   },
   created() {
-    const list = JSON.parse(localStorage.getItem(FAVORITE_LIST_KEY))
-    if (list !== null) {
-      this.setFavoriteList(list)
+    const favoriteList = JSON.parse(localStorage.getItem(FAVORITE_LIST_KEY))
+    if (favoriteList !== null) {
+      this.setFavoriteList(favoriteList)
+    }
+
+    const historyList = JSON.parse(localStorage.getItem(HISTORY_LIST_KEY))
+    if (historyList !== null) {
+      this.setHistoryList(historyList)
     }
   },
   mounted() {
@@ -50,15 +55,18 @@ export default {
       'playerCurrentTime',
       'playMode',
       'songs',
-      'favoriteList'
+      'favoriteList',
+      'historyList'
     ])
   },
   watch: {
     isPlaying(curVal, prevVal) {
+      const audioEl = this.$refs.audio
       if (curVal) {
-        this.$refs.audio.play()
+        this.setHistorySong(this.currentSong)
+        audioEl.play()
       } else {
-        this.$refs.audio.pause()
+        audioEl.pause()
       }
     },
     currentSong() {
@@ -72,18 +80,24 @@ export default {
     },
     favoriteList(curVal, prevVal) {
       localStorage.setItem(FAVORITE_LIST_KEY, JSON.stringify(curVal))
+    },
+    historyList(curVal, prevVal) {
+      localStorage.setItem(HISTORY_LIST_KEY, JSON.stringify(curVal))
     }
   },
   methods: {
     ...mapActions([
       'setCurrentSongIndex',
-      'setFavoriteList'
+      'setFavoriteList',
+      'setHistorySong',
+      'setHistoryList'
     ]),
     playSong() {
       const audioEl = this.$refs.audio
       audioEl.oncanplay = () => {
         this.totalTime = audioEl.duration
         if (this.isPlaying) {
+          this.setHistorySong(this.currentSong)
           audioEl.play()
         } else {
           audioEl.pause()
