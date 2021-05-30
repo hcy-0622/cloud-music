@@ -6,8 +6,8 @@
       </div>
       <p>{{ firstLyric }}</p>
     </swiper-slide>
-    <swiper-slide class="lyric">
-      <scroll-view>
+    <swiper-slide class="lyric" ref="lyric">
+      <scroll-view ref="sv">
         <ul>
           <li
             :class="{active: currentLineNum === Number(k)}"
@@ -65,10 +65,37 @@ export default {
   },
   watch: {
     currentTime(curVal) {
+      // 高亮歌词
       const lineNum = Math.floor(curVal)
+      // 递归查找当前歌词
+      this.currentLineNum = this.getActiveLineNum(lineNum)
+
+      // 当前行数变化后滚动歌词
+      const currentLyricTop = document.querySelector('li.active').offsetTop
+      const lyricHeight = this.$refs.lyric.$el.offsetHeight
+      const sv = this.$refs.sv
+      if (currentLyricTop > lyricHeight / 2) {
+        sv.scrollTo(0, lyricHeight / 2 - currentLyricTop, 200)
+      } else {
+        sv.scrollTo(0, 0, 200)
+      }
+    },
+    currentLyric(curVal, prevVal) {
+      const keys = Object.keys(curVal)
+      this.currentLineNum = keys[0]
+    }
+  },
+  methods: {
+    getActiveLineNum(lineNum) {
+      if (lineNum < 0) {
+        return this.currentLineNum
+      }
       const result = this.currentSongLyric[lineNum]
-      if (result) {
-        this.currentLineNum = Math.floor(curVal)
+      if (!result) {
+        lineNum--
+        return this.getActiveLineNum(lineNum)
+      } else {
+        return lineNum
       }
     }
   }
@@ -118,7 +145,7 @@ export default {
       @include font_color();
       margin: 10px 0;
       &:last-of-type {
-        padding-bottom: 100px;
+        padding-bottom: 50%;
       }
       &.active {
         color: #fff;

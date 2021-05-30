@@ -49,6 +49,9 @@ export default {
       setTimeout(() => {
         this.scroll.refresh()
       }, 200)
+    },
+    scrollTo(x, y, time) {
+      this.scroll.scrollTo(x, y, time)
     }
     // scrolling(fn) {
     //   this.scroll.on('scroll', function () {

@@ -2,7 +2,7 @@
   <div class="player-bottom">
     <div class="bottom-progress">
       <span>{{ currentTimeFormatted }}</span>
-      <div class="progress-bar" @click="progressClick">
+      <div class="progress-bar" ref="progress" @click="progressClick">
         <div class="progress-line" :style="{ width: currentProgress + '%' }">
           <div class="progress-dot"></div>
         </div>
@@ -102,10 +102,16 @@ export default {
     },
     progressClick(e) {
       // 计算进度条的位置
-      const offsetLeft = e.target.offsetLeft
+      const p = this.$refs.progress
+      // 相对于父元素左边的距离
+      const offsetLeft = p.offsetLeft
+      // 相对于浏览器左边的距离
       const eventLeft = e.pageX
+      // 计算相对于自身左侧的距离
       const clickLeft = eventLeft - offsetLeft
-      const progressWidth = e.target.offsetWidth
+      // 自身的宽度
+      const progressWidth = p.offsetWidth
+      // 计算点击位置相对于自身宽度的百分比
       const rate = clickLeft / progressWidth
       this.currentProgress = rate * 100
       // 计算从什么地方播放

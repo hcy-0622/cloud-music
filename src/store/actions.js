@@ -35,6 +35,14 @@ export default {
     const urlRes = await getSongUrl({ id: idsStr })
     const list = res.songs.map((song, idx) => {
       let singer = ''
+      let url = ''
+      for (let j = 0; j < urlRes.data.length; j++) {
+        const item = urlRes.data[j]
+        if (song.id === item.id) {
+          url = item.url
+          break
+        }
+      }
       song.ar.forEach((a, idx) => {
         if (idx === 0) {
           singer = a.name
@@ -48,7 +56,7 @@ export default {
         name: song.name,
         singer,
         picUrl: song.al.picUrl,
-        url: urlRes.data[idx].url
+        url
       }
     })
     commit(SET_SONG_DETAIL, list)
