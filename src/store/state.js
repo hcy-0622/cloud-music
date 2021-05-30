@@ -11,5 +11,6 @@ export default {
   currentSong: {}, // 当前播放的歌曲
   currentSongLyric: {},
   currentSongIndex: 0, // 当前播放歌曲的索引
-  playerCurrentTime: 0 // 播放器当前时间
+  playerCurrentTime: 0, // 播放器当前时间
+  favoriteList: []
 }

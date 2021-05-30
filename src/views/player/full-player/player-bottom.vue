@@ -14,7 +14,7 @@
       <div class="prev" @click="prev"></div>
       <div :class="playClass" @click="play"></div>
       <div class="next" @click="next"></div>
-      <div class="favorite"></div>
+      <div :class="favoriteClass" @click="favorite"></div>
     </div>
   </div>
 </template>
@@ -44,7 +44,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isPlaying', 'playMode', 'currentSongIndex']),
+    ...mapGetters([
+      'isPlaying',
+      'playMode',
+      'currentSongIndex',
+      'currentSong',
+      'favoriteList'
+    ]),
     modeClass() {
       return {
         mode: true,
@@ -57,6 +63,12 @@ export default {
       return {
         play: true,
         active: this.isPlaying
+      }
+    },
+    favoriteClass() {
+      return {
+        favorite: true,
+        active: this.favoriteList.find(f => f.id === this.currentSong.id) !== undefined
       }
     },
     totalTimeFormatted() {
@@ -78,7 +90,8 @@ export default {
       'setIsPlaying',
       'setPlayMode',
       'setCurrentSongIndex',
-      'setPlayerCurrentTime'
+      'setPlayerCurrentTime',
+      'setFavoriteSong'
     ]),
     play() {
       this.setIsPlaying(!this.isPlaying)
@@ -117,6 +130,9 @@ export default {
       // 计算从什么地方播放
       const currentTime = this.totalTime * rate
       this.setPlayerCurrentTime(currentTime)
+    },
+    favorite() {
+      this.setFavoriteSong(this.currentSong)
     }
   }
 }
@@ -201,6 +217,9 @@ export default {
     }
     .favorite {
       @include bg_img('../../../assets/images/un_favorite');
+      &.active {
+        @include bg_img('../../../assets/images/favorite');
+      }
     }
   }
 }

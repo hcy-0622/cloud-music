@@ -3,7 +3,12 @@
     <full-player :total-time="totalTime" :current-time="currentTime"></full-player>
     <mini-player></mini-player>
     <list-player></list-player>
-    <audio :src="currentSong.url" ref="audio" @timeupdate="timeupdate" @ended="ended"></audio>
+    <audio
+      :src="currentSong ? currentSong.url : ''"
+      ref="audio"
+      @timeupdate="timeupdate"
+      @ended="ended"
+    ></audio>
   </div>
 </template>
 
@@ -13,7 +18,7 @@ import { mapGetters, mapActions } from 'vuex'
 import FullPlayer from './full-player/index.vue'
 import MiniPlayer from './mini-player/index.vue'
 import ListPlayer from './list-player/index.vue'
-import { PLAY_MODE } from '@/constants'
+import { FAVORITE_LIST_KEY, PLAY_MODE } from '@/constants'
 import { getRandomIntInclusive } from '@/utils'
 
 export default {
@@ -25,6 +30,12 @@ export default {
       currentTime: 0
     }
   },
+  created() {
+    const list = JSON.parse(localStorage.getItem(FAVORITE_LIST_KEY))
+    if (list !== null) {
+      this.setFavoriteList(list)
+    }
+  },
   mounted() {
     this.$refs.audio.oncanplay = () => {
       this.totalTime = this.$refs.audio.duration
@@ -34,10 +45,12 @@ export default {
     ...mapGetters([
       'currentSong',
       'isPlaying',
-      'currentSongIndex',
+      'currentSong',
+      // 'currentSongIndex',
       'playerCurrentTime',
       'playMode',
-      'songs'
+      'songs',
+      'favoriteList'
     ])
   },
   watch: {
@@ -48,24 +61,35 @@ export default {
         this.$refs.audio.pause()
       }
     },
-    currentSongIndex() {
-      this.$refs.audio.oncanplay = () => {
-        this.totalTime = this.$refs.audio.duration
-        if (this.isPlaying) {
-          this.$refs.audio.play()
-        } else {
-          this.$refs.audio.pause()
-        }
-      }
+    currentSong() {
+      this.playSong()
     },
-    playerCurrentTime(curVal) {
+    currentSongIndex() {
+      this.playSong()
+    },
+    playerCurrentTime(curVal, prevVal) {
       this.$refs.audio.currentTime = curVal
+    },
+    favoriteList(curVal, prevVal) {
+      localStorage.setItem(FAVORITE_LIST_KEY, JSON.stringify(curVal))
     }
   },
   methods: {
     ...mapActions([
-      'setCurrentSongIndex'
+      'setCurrentSongIndex',
+      'setFavoriteList'
     ]),
+    playSong() {
+      const audioEl = this.$refs.audio
+      audioEl.oncanplay = () => {
+        this.totalTime = audioEl.duration
+        if (this.isPlaying) {
+          audioEl.play()
+        } else {
+          audioEl.pause()
+        }
+      }
+    },
     timeupdate(e) {
       this.currentTime = e.target.currentTime
     },

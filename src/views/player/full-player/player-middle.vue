@@ -71,13 +71,16 @@ export default {
       this.currentLineNum = this.getActiveLineNum(lineNum)
 
       // 当前行数变化后滚动歌词
-      const currentLyricTop = document.querySelector('li.active').offsetTop
-      const lyricHeight = this.$refs.lyric.$el.offsetHeight
-      const sv = this.$refs.sv
-      if (currentLyricTop > lyricHeight / 2) {
-        sv.scrollTo(0, lyricHeight / 2 - currentLyricTop, 200)
-      } else {
-        sv.scrollTo(0, 0, 200)
+      const el = document.querySelector('li.active')
+      if (el !== null) {
+        const currentLyricTop = el.offsetTop
+        const lyricHeight = this.$refs.lyric.$el.offsetHeight
+        const sv = this.$refs.sv
+        if (currentLyricTop > lyricHeight / 2) {
+          sv.scrollTo(0, lyricHeight / 2 - currentLyricTop, 200)
+        } else {
+          sv.scrollTo(0, 0, 200)
+        }
       }
     },
     currentLyric(curVal, prevVal) {

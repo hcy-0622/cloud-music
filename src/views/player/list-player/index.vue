@@ -20,7 +20,10 @@
                   <p>{{ s.name }}</p>
                 </div>
                 <div class="item-right">
-                  <div class="item-favorite"></div>
+                  <div
+                    :class="['item-favorite', isFavorite(s) ? 'active' : '']"
+                    @click.stop="favorite(s)"
+                  ></div>
                   <div class="item-close" @click.stop="delSongByIndex(i)"></div>
                 </div>
               </li>
@@ -52,7 +55,8 @@ export default {
       'playMode',
       'isShowListPlayer',
       'songs',
-      'currentSongIndex'
+      'currentSongIndex',
+      'favoriteList'
     ]),
     modeClass() {
       return {
@@ -94,7 +98,8 @@ export default {
       'setPlayMode',
       'setListPlayer',
       'delSong',
-      'setCurrentSongIndex'
+      'setCurrentSongIndex',
+      'setFavoriteSong'
     ]),
     hide() {
       this.setListPlayer(false)
@@ -121,6 +126,12 @@ export default {
     },
     selectMusic(idx) {
       this.setCurrentSongIndex(idx)
+    },
+    favorite(song) {
+      this.setFavoriteSong(song)
+    },
+    isFavorite(song) {
+      return this.favoriteList.find(s => s.id === song.id) !== undefined
     },
     // 动画
     enter(el, done) {
@@ -215,7 +226,10 @@ export default {
           .item-favorite {
             width: 56px;
             height: 56px;
-            @include bg_img('../../../assets/images/small_favorite');
+            @include bg_img('../../../assets/images/small_un_favorite');
+            &.active {
+              @include bg_img('../../../assets/images/small_favorite');
+            }
           }
           .item-close {
             width: 52px;

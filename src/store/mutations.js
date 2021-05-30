@@ -8,7 +8,9 @@ import {
   SET_SONG_DETAIL,
   SET_SONG_LYRIC,
   SET_CURRENT_SONG_INDEX,
-  SET_PLAYER_CURRENT_TIME
+  SET_PLAYER_CURRENT_TIME,
+  SET_FAVORITE_SONG,
+  SET_FAVORITE_LIST
 } from './types'
 
 export default {
@@ -66,5 +68,14 @@ export default {
   },
   [SET_PLAYER_CURRENT_TIME](state, time) {
     state.playerCurrentTime = time
+  },
+  [SET_FAVORITE_SONG](state, song) {
+    const result = state.favoriteList.find(f => f === song)
+    if (result === undefined) {
+      state.favoriteList.push(song)
+    }
+  },
+  [SET_FAVORITE_LIST](state, list) {
+    state.favoriteList = list
   }
 }

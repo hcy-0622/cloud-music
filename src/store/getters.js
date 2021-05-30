@@ -32,5 +32,8 @@ export default {
   },
   playerCurrentTime(state) {
     return state.playerCurrentTime
+  },
+  favoriteList(state) {
+    return state.favoriteList
   }
 }

@@ -3,6 +3,8 @@ import { parseLyric } from '@/utils'
 import {
   DEL_SONG,
   SET_CURRENT_SONG_INDEX,
+  SET_FAVORITE_LIST,
+  SET_FAVORITE_SONG,
   SET_FULL_PLAYER,
   SET_IS_PLAYING,
   SET_LIST_PLAYER,
@@ -63,7 +65,7 @@ export default {
   },
   async getSongLyric({ commit }, id) {
     const res = await getSongLyric({ id })
-    if (!res.nolyric) {
+    if (res.lrc && res.lrc.lyric) {
       const lyric = parseLyric(res.lrc.lyric)
       commit(SET_SONG_LYRIC, lyric)
     }
@@ -76,5 +78,11 @@ export default {
   },
   setPlayerCurrentTime({ commit }, time) {
     commit(SET_PLAYER_CURRENT_TIME, time)
+  },
+  setFavoriteSong({ commit }, song) {
+    commit(SET_FAVORITE_SONG, song)
+  },
+  setFavoriteList({ commit }, list) {
+    commit(SET_FAVORITE_LIST, list)
   }
 }

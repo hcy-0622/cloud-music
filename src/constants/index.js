@@ -4,3 +4,4 @@ export const PLAY_MODE = {
   one: 1,
   random: 2
 }
+export const FAVORITE_LIST_KEY = 'favorite_list'
