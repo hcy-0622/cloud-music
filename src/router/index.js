@@ -8,6 +8,7 @@ const Singer = () => import('../views/singer/index.vue')
 const Rank = () => import('../views/rank/index.vue')
 const Search = () => import('../views/search/index.vue')
 const Detail = () => import('../views/detail/index.vue')
+const Me = () => import('../views/me/index.vue')
 
 const routes = [{
   path: '/',
@@ -28,6 +29,9 @@ const routes = [{
 }, {
   path: '/search',
   component: Search
+}, {
+  path: '/me',
+  component: Me
 }]
 
 const router = new VueRouter({

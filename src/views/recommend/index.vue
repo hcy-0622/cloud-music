@@ -11,7 +11,7 @@
             @select="selectItem"
           ></personalized>
           <personalized type="album" title="最新专辑" :personalized="albums" @select="selectItem"></personalized>
-          <song-list :songs="songs"></song-list>
+          <latest-songs :songs="songs"></latest-songs>
         </div>
       </scroll-view>
     </div>
@@ -26,11 +26,11 @@ import { getBanner, getPersonalized, getNewAlbum, getNewSong } from '@/api'
 import ScrollView from '@/components/scroll-view.vue'
 import Banner from './banner.vue'
 import Personalized from './personalized.vue'
-import SongList from './song-list.vue'
+import LatestSongs from './latest-songs.vue'
 
 export default {
   name: 'Recommend',
-  components: { ScrollView, Banner, Personalized, SongList },
+  components: { ScrollView, Banner, Personalized, LatestSongs },
   data() {
     return {
       banners: [],
@@ -50,7 +50,23 @@ export default {
       this.albums = data.albums.slice(0, 6)
     }).catch(err => console.error(err))
     getNewSong().then(data => {
-      this.songs = data.result
+      const list = data.result.map(item => {
+        let singer = ''
+        for (let i = 0; i < item.song.artists.length; i++) {
+          if (i === 0) {
+            singer = item.song.artists[i].name
+          } else {
+            singer += ' - ' + item.song.artists[i].name
+          }
+        }
+        return {
+          id: item.id,
+          name: item.name,
+          picUrl: item.song.album.picUrl,
+          singer
+        }
+      })
+      this.songs = list
     }).catch(err => console.error(err))
   },
   methods: {

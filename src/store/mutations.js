@@ -72,7 +72,7 @@ export default {
     state.playerCurrentTime = time
   },
   [SET_FAVORITE_SONG](state, song) {
-    const result = state.favoriteList.find(f => f === song)
+    const result = state.favoriteList.find(f => f.id === song.id)
     if (result === undefined) {
       state.favoriteList.push(song)
     }
@@ -81,7 +81,7 @@ export default {
     state.favoriteList = list
   },
   [SET_HISTORY_SONG](state, song) {
-    const result = state.historyList.find(f => f === song)
+    const result = state.historyList.find(f => f.id === song.id)
     if (result === undefined) {
       // 最多保存100首歌曲
       if (state.historyList.length >= 100) {

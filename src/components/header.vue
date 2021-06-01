@@ -2,7 +2,7 @@
   <div class="header" @click="changeTheme">
     <div class="header-left"></div>
     <p class="header-title">网抑云音乐</p>
-    <div class="header-right"></div>
+    <div class="header-right" @click.stop="meClick"></div>
   </div>
 </template>
 
@@ -22,6 +22,9 @@ export default {
         this.index = 0
       }
       document.documentElement.setAttribute('data-theme', this.themes[this.index])
+    },
+    meClick() {
+      this.$router.push('/me')
     }
   }
 }
