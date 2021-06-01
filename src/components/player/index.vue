@@ -42,7 +42,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.audio.oncanplay = () => {
+    this.$refs.audio.ondurationchange = () => {
       this.totalTime = this.$refs.audio.duration
     }
   },
@@ -51,7 +51,7 @@ export default {
       'currentSong',
       'isPlaying',
       'currentSong',
-      // 'currentSongIndex',
+      'currentSongIndex',
       'playerCurrentTime',
       'playMode',
       'songs',
@@ -94,7 +94,8 @@ export default {
     ]),
     playSong() {
       const audioEl = this.$refs.audio
-      audioEl.oncanplay = () => {
+      // IOS一个bug，不会自动加载歌曲，canplay事件不会自动执行
+      audioEl.ondurationchange = () => {
         this.totalTime = audioEl.duration
         if (this.isPlaying) {
           this.setHistorySong(this.currentSong)
@@ -122,7 +123,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.player {
-  background: palevioletred;
-}
 </style>

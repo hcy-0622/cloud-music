@@ -122,7 +122,7 @@ export default {
       width: 500px;
       height: 500px;
       border-radius: 50%;
-      border: 30px solid greenyellow;
+      border: 15px solid fuchsia;
       overflow: hidden;
       animation: sport 4s linear infinite;
       animation-play-state: paused;
