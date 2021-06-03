@@ -12,7 +12,7 @@ fastclick.attach(document.body)
 const vConsole = new VConsole()
 Vue.config.productionTip = false
 Vue.use(VueLazyload, {
-  loading: require('./assets/images/loading.png')
+  loading: require('./assets/images/loading.gif')
 })
 Vue.use(vConsole)
 new Vue({

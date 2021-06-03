@@ -17,6 +17,10 @@ export default {
   },
   methods: {
     changeTheme() {
+      // TODO 暂不支持生产环境切换主题功能
+      if (process.env.NODE_ENV !== 'development') {
+        return
+      }
       this.index++
       if (this.index >= this.themes.length) {
         this.index = 0
