@@ -52,12 +52,12 @@ export default {
     },
     scrollTo(x, y, time) {
       this.scroll.scrollTo(x, y, time)
+    },
+    scrolling(fn) {
+      this.scroll.on('scroll', function () {
+        fn(this.y)
+      })
     }
-    // scrolling(fn) {
-    //   this.scroll.on('scroll', function () {
-    //     fn(this.y)
-    //   })
-    // }
   }
 }
 </script>

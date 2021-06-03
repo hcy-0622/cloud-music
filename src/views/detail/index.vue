@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getAlbum, getPlayList } from '@/api'
+import { getAlbum, getArtistsSong, getPlayList } from '@/api'
 import ScrollView from '@/components/scroll-view.vue'
 import DetailHeader from './detail-header.vue'
 import DetailTop from './detail-top.vue'
@@ -38,6 +38,15 @@ export default {
           name: album.name,
           coverImgUrl: album.picUrl,
           tracks: songs
+        }
+      }).catch(err => console.error(err))
+    } else if (type === 'singer') {
+      getArtistsSong({ id }).then(data => {
+        const { artist, hotSongs } = data
+        this.playList = {
+          name: artist.name,
+          coverImgUrl: artist.picUrl,
+          tracks: hotSongs
         }
       }).catch(err => console.error(err))
     }
