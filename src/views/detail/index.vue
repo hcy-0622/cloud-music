@@ -49,6 +49,10 @@ export default {
           tracks: hotSongs
         }
       }).catch(err => console.error(err))
+    } else if (type === 'rank') {
+      getPlayList({ id }).then(data => {
+        this.playList = data.playlist
+      }).catch(err => console.error(err))
     }
   },
   // mounted() {

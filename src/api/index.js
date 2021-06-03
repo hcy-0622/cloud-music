@@ -54,4 +54,89 @@ export const getAllArtists = () => new Promise((resolve, reject) => {
     .catch(e => reject(e))
 })
 
-getAllArtists()
+export const getTopListDetail = () => new Promise((resolve, reject) => {
+  const category = {
+    officialList: [
+      { name: '飙升榜', id: 3 },
+      { name: '新歌榜', id: 0 },
+      { name: '原创榜', id: 2 },
+      { name: '热歌榜', id: 1 }
+      // { name: '歌手榜', id: 4 }
+    ],
+    globalList: [
+      { name: '美国Billboard榜', id: 6 },
+      { name: 'UK排行榜周榜', id: 5 },
+      { name: 'Beatport全球电子舞曲榜', id: 21 },
+      { name: '日本Oricon榜', id: 10 }
+      // { name: 'iTunes榜', id: 8 },
+      // { name: '英国Q杂志中文版周榜', id: 29 }
+    ],
+    // recList: [
+    //   { name: '云音乐说唱榜', id: 23 },
+    //   { name: '云音乐电音榜', id: 25 },
+    //   { name: '云音乐欧美新歌榜', id: 32 },
+    //   { name: '抖音排行榜', id: 26 },
+    //   { name: '云音乐ACG音乐榜', id: 22 },
+    //   { name: '云音乐古典音乐榜', id: 24 }
+    // ],
+    // otherList: [
+    //   { name: 'KTV唛榜', id: 7 },
+    //   { name: '法国 NRJ Vos Hits 周榜', id: 19 },
+    //   { name: '新声榜', id: 27 },
+    //   { name: '云音乐韩语榜', id: 28 },
+    //   { name: '电竞音乐榜', id: 30 },
+    //   { name: '云音乐欧美热歌榜', id: 31 }
+    // ],
+    titles: {
+      officialList: '官方榜',
+      globalList: '全球榜'
+      // recList: '推荐榜',
+      // otherList: '更多榜单'
+    }
+  }
+  request.get('toplist/detail').then(res => {
+    const { list, artistToplist, rewardToplist } = res
+    list.forEach(item => {
+      let flag = false
+      const keys = Object.keys(category)
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i]
+        for (let j = 0; j < category[key].length; j++) {
+          if (category[key][j].name === item.name) {
+            category[key][j].rank = item
+            flag = true
+            break
+          }
+        }
+        if (flag) break
+      }
+    })
+    category.officialList.push({
+      name: artistToplist.name,
+      id: artistToplist.position,
+      rank: {
+        ...artistToplist,
+        coverImgUrl: artistToplist.coverUrl,
+        tracks: artistToplist.artists
+        // artists: undefined,
+        // coverUrl: undefined
+      }
+    })
+    category.officialList.push({
+      name: rewardToplist.name,
+      id: rewardToplist.position,
+      rank: {
+        ...rewardToplist,
+        coverImgUrl: rewardToplist.coverUrl,
+        tracks: rewardToplist.songs.map(item => ({
+          ...item,
+          first: item.name,
+          second: item.artists.reduce((prev, curr) => prev + ' - ' + curr.name, '')
+        }))
+        // songs: undefined,
+        // coverUrl: undefined
+      }
+    })
+    resolve(category)
+  }).catch(e => reject(e))
+})
