@@ -1,34 +1,36 @@
 <template>
   <div class="singer">
-    <scroll-view ref="sv" @scroll="scrolling">
-      <ul class="list-wrapper">
-        <li class="list-group" v-for="(v, i) of list" :key="i" ref="group">
-          <h2 class="group-title">{{ keys[i] }}</h2>
-          <ul>
-            <li
-              class="group-item"
-              v-for="s of list[i]"
-              :key="s.id"
-              @click.stop="switchSinger(s.id)"
-            >
-              <img v-lazy="s.picUrl" alt />
-              <p>{{ s.name }}</p>
-            </li>
-          </ul>
-        </li>
+    <div class="singer-wrapper">
+      <scroll-view ref="sv" @scroll="scrolling">
+        <ul class="list-wrapper">
+          <li class="list-group" v-for="(v, i) of list" :key="i" ref="group">
+            <h2 class="group-title">{{ keys[i] }}</h2>
+            <ul>
+              <li
+                class="group-item"
+                v-for="s of list[i]"
+                :key="s.id"
+                @click.stop="switchSinger(s.id)"
+              >
+                <img v-lazy="s.picUrl" alt />
+                <p>{{ s.name }}</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </scroll-view>
+      <ul class="list-keys">
+        <li
+          v-for="(key, i) of keys"
+          :key="key"
+          :data-index="i"
+          :class="{active: currentIndex === i}"
+          @touchstart.stop.prevent="touchstart"
+          @touchmove.stop.prevent="touchmove"
+        >{{ key }}</li>
       </ul>
-    </scroll-view>
-    <ul class="list-keys">
-      <li
-        v-for="(key, i) of keys"
-        :key="key"
-        :data-index="i"
-        :class="{active: currentIndex === i}"
-        @touchstart.stop.prevent="touchstart"
-        @touchmove.stop.prevent="touchmove"
-      >{{ key }}</li>
-    </ul>
-    <div class="fix-title" v-show="fixTitle !== ''" ref="fixTitle">{{ fixTitle }}</div>
+      <div class="fix-title" v-show="fixTitle !== ''" ref="fixTitle">{{ fixTitle }}</div>
+    </div>
     <transition>
       <router-view></router-view>
     </transition>
@@ -145,92 +147,78 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/variables';
 @import '@/assets/styles/mixins';
+@import '@/assets/styles/transition';
 
 .singer {
-  position: fixed;
-  top: 184px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-  @include bg_sub_color();
-  .list-wrapper {
-    .list-group {
-      .group-title {
-        @include bg_color();
-        @include font_size($font_medium);
-        color: #fff;
-        padding: 10px 20px;
-        box-sizing: border-box;
-      }
-      .group-item {
-        display: flex;
-        justify-content: flex-start;
-        padding: 10px 20px;
-        border-bottom: 1px solid #ccc;
-        img {
-          width: 100px;
-          height: 100px;
-          border-radius: 50%;
-          overflow: hidden;
-        }
-        p {
-          @include font_size($font_medium);
-          @include font_color();
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-left: 20px;
-        }
-      }
-    }
-  }
-  .list-keys {
+  width: 100%;
+  height: 100%;
+  .singer-wrapper {
     position: fixed;
-    right: 10px;
-    top: 60%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    li {
-      padding: 3px 0;
-      @include font_color();
-      @include font_size($font_medium_s);
-      &.active {
-        text-shadow: 0 0 10px #000;
+    top: 184px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    @include bg_sub_color();
+    .list-wrapper {
+      .list-group {
+        .group-title {
+          @include bg_color();
+          @include font_size($font_medium);
+          color: #fff;
+          padding: 10px 20px;
+          box-sizing: border-box;
+        }
+        .group-item {
+          display: flex;
+          justify-content: flex-start;
+          padding: 10px 20px;
+          border-bottom: 1px solid #ccc;
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+          }
+          p {
+            @include font_size($font_medium);
+            @include font_color();
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 20px;
+          }
+        }
       }
     }
+    .list-keys {
+      position: fixed;
+      right: 10px;
+      top: 60%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      li {
+        padding: 3px 0;
+        @include font_color();
+        @include font_size($font_medium_s);
+        &.active {
+          text-shadow: 0 0 10px #000;
+        }
+      }
+    }
+    .fix-title {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      color: #fff;
+      @include font_size($font_medium);
+      @include bg_color();
+    }
   }
-  .fix-title {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    padding: 10px 20px;
-    box-sizing: border-box;
-    color: #fff;
-    @include font_size($font_medium);
-    @include bg_color();
-  }
-}
-
-.v-enter {
-  transform: translateX(100%);
-}
-.v-enter-to {
-  transform: translateX(0%);
-}
-.v-enter-active {
-  transition: transform 0.6s;
-}
-.v-leave {
-  transform: translateX(0%);
-}
-.v-leave-to {
-  transform: translateX(100%);
-}
-.v-leave-active {
-  transition: transform 0.6s;
 }
 </style>

@@ -1,16 +1,19 @@
 <template>
-  <div class="header">
-    <div class="header-left" @click.stop="back"></div>
-    <ul class="header-title">
+  <my-header class="header">
+    <div slot="left" class="header-left" @click.stop="back"></div>
+    <ul slot="center" class="header-title">
       <li :class="{active: switchNum === 0}" @click.stop="switchItem(0)">我喜欢的</li>
       <li :class="{active: switchNum === 1}" @click.stop="switchItem(1)">最近听的</li>
     </ul>
-    <div class="header-right"></div>
-  </div>
+    <div slot="right" class="header-right"></div>
+  </my-header>
 </template>
 
 <script>
+import Header from '@/components/header.vue'
+
 export default {
+  components: { MyHeader: Header },
   name: 'MeHeader',
   props: {
     switchNum: {
@@ -35,18 +38,6 @@ export default {
 @import '@/assets/styles/mixins';
 
 .header {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
-  @include bg_color();
-  position: relative;
-  .header-left,
-  .header-right {
-    width: 84px;
-    height: 84px;
-    margin-top: 8px;
-  }
   .header-left {
     @include bg_img('../../assets/images/back');
   }

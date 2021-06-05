@@ -140,3 +140,6 @@ export const getTopListDetail = () => new Promise((resolve, reject) => {
     resolve(category)
   }).catch(e => reject(e))
 })
+
+export const getSearchList = (params) => request.get('search?type=1', params)
+export const getSearchHot = () => request.get('search/hot')

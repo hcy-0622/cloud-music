@@ -1,8 +1,14 @@
 <template>
   <div id="app">
-    <my-header></my-header>
+    <my-header class="header">
+      <div slot="left" class="header-left"></div>
+      <div slot="center" class="header-title">网抑云音乐</div>
+      <div slot="right" class="header-right" @click.stop="clickMe"></div>
+    </my-header>
     <my-tabbar></my-tabbar>
-    <router-view></router-view>
+    <keep-alive include="Singer, Search">
+      <router-view></router-view>
+    </keep-alive>
     <my-player></my-player>
   </div>
 </template>
@@ -18,9 +24,32 @@ export default {
     MyHeader,
     MyTabbar,
     MyPlayer
+  },
+  methods: {
+    clickMe() {
+      this.$router.push('/me')
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import './assets/styles/variables';
+@import './assets/styles/mixins';
+
+.header {
+  .header-left {
+    @include bg_img('./assets/images/logo');
+  }
+  .header-right {
+    @include bg_img('./assets/images/account');
+  }
+  .header-title {
+    text-align: center;
+    line-height: 100px;
+    color: #fff;
+    font-weight: bold;
+    @include font_size($font_medium);
+  }
+}
 </style>

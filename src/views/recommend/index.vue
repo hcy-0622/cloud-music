@@ -78,6 +78,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/transition';
+
 .recommend {
   position: fixed;
   top: 184px;
@@ -90,24 +92,5 @@ export default {
     height: 100%;
     overflow: hidden;
   }
-}
-
-.v-enter {
-  transform: translateX(100%);
-}
-.v-enter-to {
-  transform: translateX(0%);
-}
-.v-enter-active {
-  transition: transform 0.6s;
-}
-.v-leave {
-  transform: translateX(0%);
-}
-.v-leave-to {
-  transform: translateX(100%);
-}
-.v-leave-active {
-  transition: transform 0.6s;
 }
 </style>

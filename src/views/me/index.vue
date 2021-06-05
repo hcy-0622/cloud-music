@@ -30,6 +30,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/variables';
 @import '@/assets/styles/mixins';
+@import '@/assets/styles/transition';
 
 .me {
   position: fixed;
@@ -38,24 +39,5 @@ export default {
   bottom: 0;
   left: 0;
   @include bg_sub_color();
-}
-
-.v-enter {
-  transform: translateX(100%);
-}
-.v-enter-to {
-  transform: translateX(0%);
-}
-.v-enter-active {
-  transition: transform 0.6s;
-}
-.v-leave {
-  transform: translateX(0%);
-}
-.v-leave-to {
-  transform: translateX(100%);
-}
-.v-leave-active {
-  transition: transform 0.6s;
 }
 </style>

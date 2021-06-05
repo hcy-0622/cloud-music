@@ -6,3 +6,4 @@ export const PLAY_MODE = {
 }
 export const FAVORITE_LIST_KEY = 'favorite_list'
 export const HISTORY_LIST_KEY = 'history_list'
+export const SEARCH_HISTORY_KEY = 'search_history'

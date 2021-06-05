@@ -1,7 +1,28 @@
 import axios from 'axios'
+import Vue from 'vue'
 
 axios.defaults.baseURL = '/api'
-axios.defaults.timeout = 30000
+axios.defaults.timeout = 15000
+
+let count = 0
+axios.interceptors.request.use(config => {
+  Vue.showLoading()
+  count++
+  return config
+}, e => {
+  Vue.hideLoading()
+  return Promise.reject(e)
+})
+axios.interceptors.response.use(response => {
+  count--
+  if (count === 0) {
+    Vue.hideLoading()
+  }
+  return response
+}, e => {
+  Vue.hideLoading()
+  return Promise.reject(e)
+})
 
 export default {
   get: (url = '', params = {}) =>
