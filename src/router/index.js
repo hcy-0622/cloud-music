@@ -8,6 +8,7 @@ const Singer = () => import('../views/singer/index.vue')
 const Rank = () => import('../views/rank/index.vue')
 const Search = () => import('../views/search/index.vue')
 const Detail = () => import('../views/detail/index.vue')
+const Me = () => import('../views/me/index.vue')
 
 const routes = [{
   path: '/',
@@ -21,13 +22,24 @@ const routes = [{
   }]
 }, {
   path: '/singer',
-  component: Singer
+  component: Singer,
+  children: [{
+    path: 'detail/:id/:type',
+    component: Detail
+  }]
 }, {
   path: '/rank',
-  component: Rank
+  component: Rank,
+  children: [{
+    path: 'detail/:id/:type',
+    component: Detail
+  }]
 }, {
   path: '/search',
   component: Search
+}, {
+  path: '/me',
+  component: Me
 }]
 
 const router = new VueRouter({

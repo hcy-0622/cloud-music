@@ -1,10 +1,10 @@
 <template>
   <ul class="detail-bottom">
-    <li class="bottom-top">
+    <li class="bottom-top" @click="selectAllMusic">
       <div class="bottom-icon"></div>
       <div class="bottom title">播放全部</div>
     </li>
-    <li class="item" v-for="p of playList" :key="p.id" @click="selectMusic">
+    <li class="item" v-for="p of playList" :key="p.id" @click="selectMusic(p.id)">
       <h3>{{ p.name }}</h3>
       <p>{{ p.al.name }} - {{ p.ar[0].name }}</p>
     </li>
@@ -24,17 +24,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setFullScreen']),
-    selectMusic() {
-      this.setFullScreen(true)
+    ...mapActions(['setFullPlayer', 'setSongDetail']),
+    selectMusic(id) {
+      this.setFullPlayer(true)
+      this.setSongDetail([id])
+    },
+    selectAllMusic() {
+      this.setFullPlayer(true)
+      const ids = this.playList.map(p => p.id)
+      this.setSongDetail(ids)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .detail-bottom {
   width: 100%;

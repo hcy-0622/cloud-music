@@ -3,7 +3,7 @@
     <detail-header :title="playList.name"></detail-header>
     <detail-top :path="playList.coverImgUrl" ref="top"></detail-top>
     <div class="bottom">
-      <scroll-view ref="scrollView">
+      <scroll-view @scroll="scrolling">
         <detail-bottom :playList="playList.tracks"></detail-bottom>
       </scroll-view>
     </div>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getAlbum, getPlayList } from '@/api'
+import { getAlbum, getArtistsSong, getPlayList } from '@/api'
 import ScrollView from '@/components/scroll-view.vue'
 import DetailHeader from './detail-header.vue'
 import DetailTop from './detail-top.vue'
@@ -40,27 +40,56 @@ export default {
           tracks: songs
         }
       }).catch(err => console.error(err))
+    } else if (type === 'singer') {
+      getArtistsSong({ id }).then(data => {
+        const { artist, hotSongs } = data
+        this.playList = {
+          name: artist.name,
+          coverImgUrl: artist.picUrl,
+          tracks: hotSongs
+        }
+      }).catch(err => console.error(err))
+    } else if (type === 'rank') {
+      getPlayList({ id }).then(data => {
+        this.playList = data.playlist
+      }).catch(err => console.error(err))
     }
   },
-  mounted() {
-    const topEl = this.$refs.top.$el
-    this.$refs.scrollView.scrolling((offsetY) => {
+  // mounted() {
+  //   const topComponent = this.$refs.top
+  //   this.$refs.scrollView.scrolling((offsetY) => {
+  //     if (offsetY < 0) {
+  //       const scale = Math.abs(offsetY) / topComponent.$el.offsetHeight
+  //       topComponent.changeMask(scale)
+  //       // 高斯模糊非常消耗性能, 不建议使用
+  //       // topComponent.$el.style.filter = `blur(${scale}px)`
+  //     } else {
+  //       const scale = 1 + offsetY / topComponent.$el.offsetHeight
+  //       topComponent.$el.style.transform = `scale(${scale})`
+  //     }
+  //   })
+  // },
+  methods: {
+    scrolling(offsetY) {
+      const topComponent = this.$refs.top
       if (offsetY < 0) {
-        const scale = Math.abs(offsetY) / topEl.offsetHeight
-        this.$refs.top.changeMask(scale)
+        const scale = Math.abs(offsetY) / topComponent.$el.offsetHeight
+        // TODO 思考两种不同的样式修改方式
+        topComponent.changeMask(scale)
         // 高斯模糊非常消耗性能, 不建议使用
-        // topEl.style.filter = `blur(${scale}px)`
+        // topComponent.$el.style.filter = `blur(${scale}px)`
       } else {
-        const scale = 1 + offsetY / topEl.offsetHeight
-        topEl.style.transform = `scale(${scale})`
+        const scale = 1 + offsetY / topComponent.$el.offsetHeight
+        // TODO 思考两种不同的样式修改方式
+        topComponent.$el.style.transform = `scale(${scale})`
       }
-    })
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/mixins';
 
 .detail {
   position: fixed;

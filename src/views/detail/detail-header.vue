@@ -1,13 +1,16 @@
 <template>
-  <div class="header" @click="changeTheme">
-    <div class="header-left" @click.stop="back"></div>
-    <p class="header-title">{{ title }}</p>
-    <div class="header-right"></div>
-  </div>
+  <my-header class="header">
+    <div slot="left" class="header-left" @click.stop="back"></div>
+    <p slot="center" class="header-title">{{ title }}</p>
+    <div slot="right" class="header-right"></div>
+  </my-header>
 </template>
 
 <script>
+import Header from '@/components/header.vue'
+
 export default {
+  components: { MyHeader: Header },
   name: 'DetailHeader',
   props: {
     title: {
@@ -16,20 +19,7 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      themes: ['theme', 'theme1', 'theme2'],
-      index: 0
-    }
-  },
   methods: {
-    changeTheme() {
-      this.index++
-      if (this.index >= this.themes.length) {
-        this.index = 0
-      }
-      document.documentElement.setAttribute('data-theme', this.themes[this.index])
-    },
     back() {
       this.$router.back()
     }
@@ -38,22 +28,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .header {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
-  @include bg_color();
-  position: relative;
-  .header-left,
-  .header-right {
-    width: 84px;
-    height: 84px;
-    margin-top: 8px;
-  }
   .header-left {
     @include bg_img('../../assets/images/back');
   }
