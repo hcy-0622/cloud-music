@@ -10,10 +10,12 @@
 <script>
 import MeHeader from './me-header.vue'
 import MeBottom from './me-bottom.vue'
+import META_INFO from '../../../meta-info'
 
 export default {
-  components: { MeHeader, MeBottom },
   name: 'Me',
+  metaInfo: META_INFO.me,
+  components: { MeHeader, MeBottom },
   data() {
     return {
       switchNum: 0

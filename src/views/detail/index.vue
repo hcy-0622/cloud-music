@@ -16,9 +16,11 @@ import ScrollView from '@/components/scroll-view.vue'
 import DetailHeader from './detail-header.vue'
 import DetailTop from './detail-top.vue'
 import DetailBottom from './detail-bottom.vue'
+import META_INFO from '../../../meta-info'
 
 export default {
   name: 'Detail',
+  metaInfo: META_INFO.detail,
   components: { DetailHeader, DetailTop, DetailBottom, ScrollView },
   data() {
     return {

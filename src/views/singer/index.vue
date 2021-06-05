@@ -40,9 +40,11 @@
 <script>
 import { getAllArtists } from '@/api'
 import ScrollView from '@/components/scroll-view.vue'
+import META_INFO from '../../../meta-info'
 
 export default {
   name: 'Singer',
+  metaInfo: META_INFO.singer,
   components: { ScrollView },
   data() {
     return {

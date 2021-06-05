@@ -2,6 +2,7 @@ import Vue from 'vue'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 import VConsole from 'vconsole'
+import MetaInfo from 'vue-meta-info'
 
 import App from './App.vue'
 import router from './router'
@@ -17,8 +18,11 @@ Vue.use(VueLazyload, {
 })
 Vue.use(Loading)
 Vue.use(vConsole, { title: '加载中...' })
+Vue.use(MetaInfo)
+
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted: () => document.dispatchEvent(new Event('x-app-rendered'))
 }).$mount('#app')

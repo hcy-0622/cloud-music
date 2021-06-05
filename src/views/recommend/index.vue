@@ -27,9 +27,11 @@ import ScrollView from '@/components/scroll-view.vue'
 import Banner from './banner.vue'
 import Personalized from './personalized.vue'
 import LatestSongs from './latest-songs.vue'
+import META_INFO from '../../../meta-info'
 
 export default {
   name: 'Recommend',
+  metaInfo: META_INFO.recommend,
   components: { ScrollView, Banner, Personalized, LatestSongs },
   data() {
     return {
