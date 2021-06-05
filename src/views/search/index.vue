@@ -52,9 +52,11 @@ import { mapActions } from 'vuex'
 import scrollView from '@/components/scroll-view.vue'
 import { getSearchHot, getSearchList } from '@/api'
 import { SEARCH_HISTORY_KEY } from '@/constants'
+import META_INFO from '../../../meta-info'
 
 export default {
   name: 'Search',
+  metaInfo: META_INFO.search,
   components: { scrollView },
   directives: {
     throttle: {
