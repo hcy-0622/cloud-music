@@ -26,10 +26,12 @@ export default {
   methods: {
     ...mapActions(['setFullPlayer', 'setSongDetail']),
     selectMusic(id) {
+      console.log('666')
       this.setFullPlayer(true)
       this.setSongDetail([id])
     },
     selectAllMusic() {
+      console.log('777')
       this.setFullPlayer(true)
       const ids = this.playList.map(p => p.id)
       this.setSongDetail(ids)

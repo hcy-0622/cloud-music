@@ -167,7 +167,7 @@ export default {
         position: relative;
         width: 0%;
         height: 100%;
-        background: #ccc;
+        @include bg_color();
         .progress-dot {
           position: absolute;
           top: 50%;

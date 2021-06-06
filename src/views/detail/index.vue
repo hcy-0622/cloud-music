@@ -99,7 +99,6 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
   @include bg_sub_color();
   .bottom {
     position: fixed;

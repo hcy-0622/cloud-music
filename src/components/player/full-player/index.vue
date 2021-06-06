@@ -65,6 +65,7 @@ export default {
 @import '@/assets/styles/mixins';
 
 .full-player {
+  z-index: 998;
   position: fixed;
   top: 0;
   right: 0;
@@ -75,7 +76,6 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
-    z-index: 999;
   }
   .player-bg {
     position: absolute;
